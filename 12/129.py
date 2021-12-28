@@ -2,7 +2,7 @@
 # b=int(input("number2: "))
 # while a%2==0 and b%2==0:
 #     print(a+b)
-#     a=int(input("number 1: "))
+#     a=int(input("number Alon: "))
 #     b=int(input("number 2: "))
 # else:
 #     print(a*b)
@@ -36,7 +36,7 @@
 
 number=int(input("input number: "))
 while number>9 and number<100:
-    if number%10==7 or number//10%10==7 or number%7==0:
+    if number%10==7 or number//10==7 or number%7==0:
         print("lucky number")
         number = int(input("input number: "))
     else:

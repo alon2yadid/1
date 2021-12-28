@@ -1,13 +1,13 @@
 # a=int(input())
 # b=int(input())
-# if (a+b)%2==1:
+# if (a+b)%2==Alon:
 #     print("odd")
 # else:
 #     print("even")
 
 
 # s=int(input())
-# if (s//100)>=1 and (s//1000)<1:
+# if (s//100)>=Alon and (s//1000)<Alon:
 #     print(f"{s//100}{s//10%10}{s%10}")
 # else:
 #     print("error")
@@ -43,13 +43,13 @@
 # else:
 #     print("sum is not 10")
 
-day=int(input("input day: "))
-month=int(input("input month: "))
-year=int(input("input year: "))
-if (day>0 and day<32) and (month<13 and month>0) and (year>1949 and year<2021):
-    print(f"{day}/{month}/{year//10%10}{year%10}")
-else:
-    print("invalid date")
+# day=int(input("input day: "))
+# month=int(input("input month: "))
+# year=int(input("input year: "))
+# if (day>0 and day<32) and (month<13 and month>0) and (year>1949 and year<2021):
+#     print(f"{day}/{month}/{year//10%10}{year%10}")
+# else:
+#     print("invalid date")
 
 # q=int(input())
 # w=int(input())
