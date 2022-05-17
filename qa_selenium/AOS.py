@@ -542,7 +542,7 @@ class AOS:
         return user_name.text
 
     def check_if_logged_in(self):
-        sleep(1.5)
+        sleep(4)
         username=self.account_icon_user_name()
         if username!="":
             return True
