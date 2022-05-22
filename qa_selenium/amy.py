@@ -18,7 +18,7 @@ class Amy:
         self.email_priority_dict={}
         self.email_list=[]
         self.priorities=[]
-        self.capacity=50
+        self.capacity=4
 
     def login_to_gmail(self,email,password):
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"#identifierId")))
@@ -35,6 +35,8 @@ class Amy:
         second_next_button.click()
 
     def email_contents(self,order_of_email:int):
+        if order_of_email>self.total_email_count():
+            order_of_email=self.total_email_count()
         self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,"table[id=':26']>tbody>tr")))
         all_emails=self.driver.find_elements(By.CSS_SELECTOR,"table[id=':26']>tbody>tr")
         selected_email=all_emails[order_of_email-1]
@@ -97,7 +99,13 @@ class Amy:
         else:
             return 0.5
 
-    def get_priority(self):
+    def get_priority(self,order_of_email:int=0):
+        if order_of_email!=0:
+            self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "table[id=':26']>tbody>tr")))
+            all_emails = self.driver.find_elements(By.CSS_SELECTOR, "table[id=':26']>tbody>tr")
+            selected_email = all_emails[order_of_email - 1]
+            selected_email.click()
+
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "h2.hP")))
         email_subject=self.driver.find_element(By.CSS_SELECTOR, "h2.hP").text
 
@@ -112,6 +120,9 @@ class Amy:
         characteristic2=self.priority_calculator_by_files(number_of_files_in_email)
 
         characteristic3=self.priority_in_subject(email_subject)
+
+        if order_of_email!=0:
+            self.driver.back()
 
         priority_number=(characteristic1+characteristic2+characteristic3)/3
         return priority_number
@@ -130,6 +141,15 @@ class Amy:
                 del self.email_priority_dict[to_remove]
                 self.email_priority_dict[selected_email_subject]=selected_email_priority
                 self.order_emails()
+
+    def add_many_emails(self,number:int):
+        total_emails_in_inbox=self.total_email_count()
+        if number>total_emails_in_inbox:
+            number=total_emails_in_inbox
+        if total_emails_in_inbox>50:
+            number=50
+        for i in range(number):
+            self.add_email(i+1)
 
     def order_emails(self):
         ordererd_emails=sorted(self.email_priority_dict.items(),key=lambda x:x[1],reverse=True)
@@ -168,8 +188,11 @@ if __name__ == '__main__':
     # amy.promotions_check()
     # amy.primary_tab_click()
 
-    # amy.add_email(1)
-    # amy.add_email(2)
+    amy.add_many_emails(3)
+    print(amy.email_priority_dict)
+    print(amy.email_list)
+    print(amy.priorities)
+    amy.add_email(543)
     print(amy.email_priority_dict)
     print(amy.email_list)
     print(amy.priorities)
