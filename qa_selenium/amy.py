@@ -51,14 +51,16 @@ class Amy:
         self.driver.back()
         return email_subject,email_sender,email_priority
 
+    def get_sender_and_subject(self,order_of_email:int):
+        email_subject_and_sender=self.email_contents(order_of_email)
+        email_subject=email_subject_and_sender[0]
+        email_sender=email_subject_and_sender[1]
+        return f"Sender: {email_sender} \nSubject: {email_subject}"
 
-    def get_subject(self,order_of_email:int):
-        email_subject=self.email_contents(order_of_email)[0]
-        return email_subject
-
-    def get_sender(self,order_of_email:int):
-        email_sender=self.email_contents(order_of_email)[1]
-        return email_sender
+    def total_email_count(self):
+        self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,"div[role='button']>span.Dj>span.ts")))
+        total=self.driver.find_element(By.CSS_SELECTOR,"div[role='button']>span.Dj>span.ts").text
+        return int(total)
 
     def capital_letters_counter(self,string:str):
         count = 0
@@ -96,13 +98,9 @@ class Amy:
             return 0.5
 
     def get_priority(self):
-        # self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "table[id=':26']>tbody>tr")))
-        # all_emails = self.driver.find_elements(By.CSS_SELECTOR, "table[id=':26']>tbody>tr")
-        # selected_email = all_emails[order_of_email - 1]
-        # selected_email.click()
-
         self.wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "h2.hP")))
         email_subject=self.driver.find_element(By.CSS_SELECTOR, "h2.hP").text
+
         characteristic1=self.capital_letters_counter(email_subject)/len(email_subject)
 
         self.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,"div.gs>div>div")))
@@ -110,14 +108,13 @@ class Amy:
             number_of_files_in_email=len(self.driver.find_elements(By.CSS_SELECTOR,"span.aZo"))
         else:
             number_of_files_in_email=0
-        characteristic2=self.priority_calculator_by_files(number_of_files_in_email)
 
+        characteristic2=self.priority_calculator_by_files(number_of_files_in_email)
 
         characteristic3=self.priority_in_subject(email_subject)
 
-        priority=(characteristic1+characteristic2+characteristic3)/3
-        # self.driver.back()
-        return priority
+        priority_number=(characteristic1+characteristic2+characteristic3)/3
+        return priority_number
 
     def add_email(self,order_of_email:int):
         selected_email_content=self.email_contents(order_of_email)
@@ -130,17 +127,15 @@ class Amy:
         else:
             if selected_email_priority>self.priorities[-1]:
                 to_remove=self.email_list.pop(-1)
-                del self.priority[to_remove]
+                del self.email_priority_dict[to_remove]
                 self.email_priority_dict[selected_email_subject]=selected_email_priority
                 self.order_emails()
-
 
     def order_emails(self):
         ordererd_emails=sorted(self.email_priority_dict.items(),key=lambda x:x[1],reverse=True)
         self.email_priority_dict=dict(ordererd_emails)
         self.email_list=list(dict(self.email_priority_dict).keys())
         self.priorities=list(dict(self.email_priority_dict).values())
-
 
     def promotions_check(self):
         self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,"div.aAy")))
@@ -156,8 +151,7 @@ class Amy:
             primary_tab=self.driver.find_element(By.CSS_SELECTOR,"div.aAy.J-KU-KL.aIf-aLe")
             primary_tab.click()
 
-"span[id=':53k']>div.pG"
-"אנחנו סבורים שההודעה הזו חשובה."
+
 
 if __name__ == '__main__':
     service_chrome=Service(r"C:\Seleniumx\chromedriver.exe")
@@ -169,10 +163,13 @@ if __name__ == '__main__':
     # lastname='T'
     password='TesterT11338877'
     amy.login_to_gmail(email,password)
-    print(amy.get_subject(1))
-    print(amy.get_sender(2))
-    amy.promotions_check()
-    amy.primary_tab_click()
+    print(amy.get_sender_and_subject(2))
+    print(amy.total_email_count())
+    # amy.promotions_check()
+    # amy.primary_tab_click()
 
-    print(amy.add_email(2))
-    print(amy.email_priority_dict.items())
+    # amy.add_email(1)
+    # amy.add_email(2)
+    print(amy.email_priority_dict)
+    print(amy.email_list)
+    print(amy.priorities)
