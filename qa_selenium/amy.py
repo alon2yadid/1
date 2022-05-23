@@ -18,7 +18,7 @@ class Amy:
         self.email_priority_dict={}
         self.email_list=[]
         self.priorities=[]
-        self.capacity=4
+        self.capacity=50
 
     def login_to_gmail(self,email,password):
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"#identifierId")))
@@ -80,14 +80,14 @@ class Amy:
             sum=0
         return sum
 
-    def gmail_advice(self,order_of_email:int):
-        self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,"tr>td>div.pG")))
-        all_emails=self.driver.find_elements(By.CSS_SELECTOR,"tr>td>div.pG")
-        selected_email=all_emails[order_of_email-1]
-        if selected_email.get_attribute("aria-label")=="אנחנו סבורים שההודעה הזו חשובה.":
-            return 1
-        else:
-            return 0
+    # def gmail_advice(self,order_of_email:int):
+    #     self.wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR,"tr>td>div.pG")))
+    #     all_emails=self.driver.find_elements(By.CSS_SELECTOR,"tr>td>div.pG")
+    #     selected_email=all_emails[order_of_email-1]
+    #     if selected_email.get_attribute("aria-label")=="אנחנו סבורים שההודעה הזו חשובה.":
+    #         return 1
+    #     else:
+    #         return 0
 
     def priority_in_subject(self,subject:str):
         if 'priority:low' in subject.lower():
