@@ -8,7 +8,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from time import sleep
+
 
 class Amy:
     def __init__(self,driver:webdriver.Chrome):
@@ -182,17 +182,19 @@ if __name__ == '__main__':
     # firstname='Tester'
     # lastname='T'
     password='TesterT11338877'
+    # 5
     amy.login_to_gmail(email,password)
-    print(amy.get_sender_and_subject(2))
+    # 6
+    print(amy.promotions_check())
+    # 7
+    amy.primary_tab_click()
+    # 8
     print(amy.total_email_count())
-    # amy.promotions_check()
-    # amy.primary_tab_click()
+    # 9-10
+    print(amy.get_sender_and_subject(2))
 
-    amy.add_many_emails(3)
-    print(amy.email_priority_dict)
-    print(amy.email_list)
-    print(amy.priorities)
-    amy.add_email(543)
-    print(amy.email_priority_dict)
-    print(amy.email_list)
-    print(amy.priorities)
+    # amy.add_many_emails(3)
+    # amy.add_email(543)
+    # print(amy.email_priority_dict)
+    # print(amy.email_list)
+    # print(amy.priorities)
