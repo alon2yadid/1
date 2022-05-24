@@ -1,14 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-# from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-
 
 class Amy:
     def __init__(self,driver:webdriver.Chrome):
@@ -18,7 +12,7 @@ class Amy:
         self.email_priority_dict={}
         self.email_list=[]
         self.priorities=[]
-        self.capacity=50
+        self.capacity=5
 
     def login_to_gmail(self,email,password):
         self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"#identifierId")))
@@ -191,10 +185,12 @@ if __name__ == '__main__':
     # 8
     print(amy.total_email_count())
     # 9-10
-    print(amy.get_sender_and_subject(2))
+    print(amy.get_sender_and_subject(4))
 
-    # amy.add_many_emails(3)
-    # amy.add_email(543)
-    # print(amy.email_priority_dict)
-    # print(amy.email_list)
-    # print(amy.priorities)
+
+    amy.add_many_emails(11)
+    amy.add_email(543)
+    print(amy.email_priority_dict)
+    print(amy.email_list)
+    print(amy.priorities)
+
